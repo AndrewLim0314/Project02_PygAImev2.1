@@ -1,0 +1,19 @@
+# Hyperparameters for DQN
+dqn:
+  gamma: 0.95
+  learning_rate: 0.001
+  epsilon_start: 1.0
+  epsilon_end: 0.001
+  epsilon_decay: 0.05
+  target_update: 1000
+  batch_size: 32  # Increased batch size
+  memory_capacity: 500000
+  num_episodes: 1000
+  max_steps_per_episode: 5000  # Reduced max steps per episode
+
+
+
+# Environment settings
+env:
+  name: 'ALE/MsPacman-v5'
+  render: true
