@@ -4,16 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f592e599-e88f-49e9-a614-5ec5827f4f3e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+    <list default="true" id="f592e599-e88f-49e9-a614-5ec5827f4f3e" name="Changes" comment="second push">
+      <change afterPath="$PROJECT_DIR$/NNnSPDDDQN.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PDDDQN.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dqncnn.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/train2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dqn.py" beforeDir="false" afterPath="$PROJECT_DIR$/dqn.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/env.py" beforeDir="false" afterPath="$PROJECT_DIR$/env.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pacman-python/pacman/pacman.pyw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weights.py" beforeDir="false" afterPath="$PROJECT_DIR$/weights.py" afterDir="false" />
     </list>
@@ -38,12 +40,15 @@
     &quot;assignee&quot;: &quot;AndrewLim0314&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/AndrewLim0314/pacman-python&quot;,
-    &quot;accountId&quot;: &quot;57d2ffc8-ca32-40bc-b345-83931619763e&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/AndrewLim0314/Project02_PygAImev2.1.git",
+    "accountId": "57d2ffc8-ca32-40bc-b345-83931619763e"
   }
-}</component>
+}]]></component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -55,12 +60,17 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Python.NNnSPDDDQN.executor&quot;: &quot;Run&quot;,
+    &quot;Python.PDDDQN.executor&quot;: &quot;Run&quot;,
     &quot;Python.ai.executor&quot;: &quot;Run&quot;,
     &quot;Python.dqn.executor&quot;: &quot;Run&quot;,
+    &quot;Python.dqncnn.executor&quot;: &quot;Run&quot;,
     &quot;Python.env.executor&quot;: &quot;Run&quot;,
+    &quot;Python.loss.executor&quot;: &quot;Run&quot;,
     &quot;Python.pacman.executor&quot;: &quot;Run&quot;,
     &quot;Python.test.executor&quot;: &quot;Run&quot;,
     &quot;Python.train.executor&quot;: &quot;Run&quot;,
+    &quot;Python.train2.executor&quot;: &quot;Run&quot;,
     &quot;Python.weights.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
@@ -72,6 +82,12 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Models" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -91,20 +107,44 @@
       <workItem from="1729448141566" duration="1697000" />
       <workItem from="1729449942505" duration="5000" />
       <workItem from="1729451830754" duration="36082000" />
-      <workItem from="1729691661211" duration="2338000" />
+      <workItem from="1729691661211" duration="28967000" />
+      <workItem from="1729892585853" duration="28220000" />
+      <workItem from="1729996396176" duration="6973000" />
+      <workItem from="1730054302717" duration="6505000" />
+      <workItem from="1730063701352" duration="13049000" />
+      <workItem from="1730172987694" duration="11000" />
+      <workItem from="1730173007202" duration="4270000" />
     </task>
+    <task id="LOCAL-00001" summary="second push">
+      <option name="closed" value="true" />
+      <created>1729697163622</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1729697163622</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="second push" />
+    <option name="LAST_COMMIT_MESSAGE" value="second push" />
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Project02_PygAImev2_1$test.coverage" NAME="test Coverage Results" MODIFIED="1729697068281" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Project02_PygAImev2_1$ai.coverage" NAME="ai Coverage Results" MODIFIED="1729555923587" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project02_PygAImev2_1$dqncnn.coverage" NAME="dqncnn Coverage Results" MODIFIED="1729874231107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Project02_PygAImev2_1$pacman.coverage" NAME="pacman Coverage Results" MODIFIED="1729622598459" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pacman-python/pacman" />
     <SUITE FILE_PATH="coverage/Project02_PygAImev2_1$dqn.coverage" NAME="dqn Coverage Results" MODIFIED="1729687563035" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project02_PygAImev2_1$PDDDQN.coverage" NAME="PDDDQN Coverage Results" MODIFIED="1730062312374" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project02_PygAImev2_1$NNnSPDDDQN.coverage" NAME="NNnSPDDDQN Coverage Results" MODIFIED="1729813489644" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project02_PygAImev2_1$train2.coverage" NAME="train2 Coverage Results" MODIFIED="1730138642736" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Project02_PygAImev2_1$env.coverage" NAME="env Coverage Results" MODIFIED="1729617430545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project02_PygAImev2_1$train.coverage" NAME="train Coverage Results" MODIFIED="1730207157943" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project02_PygAImev2_1$loss.coverage" NAME="loss Coverage Results" MODIFIED="1729974634231" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project02_PygAImev2_1$test.coverage" NAME="test Coverage Results" MODIFIED="1730207762149" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project02_PygAImev2_1$ai.coverage" NAME="ai Coverage Results" MODIFIED="1729555923587" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Project02_PygAImev2_1$weights.coverage" NAME="weights Coverage Results" MODIFIED="1729686031667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Project02_PygAImev2_1$train.coverage" NAME="train Coverage Results" MODIFIED="1729692230348" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

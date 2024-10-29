@@ -9,7 +9,7 @@ output_dim = 9  # Example output dimension, adjust as needed
 untrained_dqn = DQN(input_dim=input_dim, output_dim=output_dim)
 
 # Load the saved DQN model
-model_save_path = '/Users/25lim/ADV ML AI/Project02_PygAImev2.1/dqn_model.pth'
+model_save_path = '/Models/dqn_model.pth'
 saved_dqn = DQN(input_dim=input_dim, output_dim=output_dim)
 
 # Load the saved weights into the model

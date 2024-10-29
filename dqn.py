@@ -1,11 +1,9 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import numpy as np
 import random
 from collections import deque
-import numpy as np
-
-
 
 class DQN(nn.Module):
     def __init__(self, input_dim, output_dim, epsilon=1.0, epsilon_decay=0.995, epsilon_min=0.01):
@@ -26,7 +24,8 @@ class DQN(nn.Module):
         return self.fc3(x)  # Output Q-values
 
     def remember(self, state, action, reward, next_state, done):
-        """ Store the experience in the replay buffer. """
+        """ #Store the experience in the replay buffer.
+"""
         self.memory.append((state, action, reward, next_state, done))
 
     def select_action(self, state):
@@ -42,7 +41,7 @@ class DQN(nn.Module):
 
 
     def replay(self, batch_size):
-        """ Experience replay to update the model. """
+        """ #Experience replay to update the model. """
         if len(self.memory) < batch_size:
             return
 

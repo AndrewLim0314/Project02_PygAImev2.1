@@ -1,19 +1,48 @@
 # Hyperparameters for DQN
 dqn:
-  gamma: 0.95
-  learning_rate: 0.001
+  gamma: 0.99  # Consider raising gamma for better long-term reward consideration
+  learning_rate: 0.00025  # Match with training section
   epsilon_start: 1.0
-  epsilon_end: 0.001
-  epsilon_decay: 0.05
-  target_update: 1000
+  epsilon_end: 0.01  # Keep this consistent
+  epsilon_decay: 0.995  # Match with training section
+  target_update: 5000  # Should match training target update frequency
   batch_size: 32  # Increased batch size
-  memory_capacity: 500000
+  memory_capacity: 1000000  # Match with training memory size
   num_episodes: 1000
-  max_steps_per_episode: 5000  # Reduced max steps per episode
+  max_steps_per_episode: 5000  # Adjust as needed
+  model_update: 250
 
+# Model configuration for DQN with NoisyNet and prioritized experience replay
+model:
+  type: "DQN"
+  architecture:
+    dueling: true
+    noisy: true
+    n_step: 4
+  input_shape: [4, 84, 84]  # Input shape for frame stacking
+  nb_actions: 9  # Number of actions for your environment
 
+training:
+  epsilon_start: 1.0  # Keep consistent
+  epsilon_end: 0.01  # Keep consistent
+  epsilon_decay: 0.05  # Consider keeping this low for gradual decay
+  batch_size: 32  # Keep consistent
+  learning_rate: 0.00025  # Should match with DQN section
+  gamma: 0.99  # Keep consistent with DQN section
+  target_update_frequency: 5000  # Should match DQN section
+  warmup_steps: 50000  # Number of steps before training starts
+  memory_size: 1000000  # Keep consistent with DQN section
+  n_step: 4  # Update every n steps
+  prioritized_replay: true  # Enable prioritized replay
+  alpha: 0.6  # for prioritized experience replay
+  beta_start: 0.4  # Starting value for beta in prioritized replay
+  beta_frames: 1000000  # Frames to anneal beta to 1.0
+
+callbacks:
+  save_model: true  # Whether to save the model
+  log_interval: 1000  # Log performance every n episodes
 
 # Environment settings
 env:
-  name: 'ALE/MsPacman-v5'
-  render: true
+  name: 'ALE/MsPacman-v5'  # Environment name
+  render: true  # Enable rendering of the environment
