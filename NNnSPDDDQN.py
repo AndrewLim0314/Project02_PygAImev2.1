@@ -21,24 +21,26 @@ class NoisyDense(nn.Module):
         self.reset_parameters()
 
     def reset_parameters(self):
-        # Initialize parameters (e.g., Xavier for weights)
         nn.init.xavier_uniform_(self.w_mu)
         nn.init.xavier_uniform_(self.w_sigma)
         nn.init.zeros_(self.b_mu)
         nn.init.zeros_(self.b_sigma)
 
-    def forward(self, inputs):
+    def forward(self, inputs, disable_noise=False):
+        # Convert inputs to 2D if it's a single input vector
         if inputs.dim() == 1:
-            inputs = inputs.unsqueeze(0)  # Ensure it's treated as a batch of 1
+            inputs = inputs.unsqueeze(0)
 
-        # Ensure that inputs to linear layers are 2D
-        inputs = inputs.view(inputs.size(0), -1)
-
-        # Sample noise
-        noise_w = self.w_sigma.data.new(self.w_mu.size()).normal_() * 0.5
-        noise_b = self.b_sigma.data.new(self.b_mu.size()).normal_() * 0.5
+        # Sample noise or use zero noise based on disable_noise
+        if not disable_noise:
+            noise_w = self.w_sigma.data.new(self.w_mu.size()).normal_() * 0.5
+            noise_b = self.b_sigma.data.new(self.b_mu.size()).normal_() * 0.5
+        else:
+            noise_w = torch.zeros_like(self.w_sigma)
+            noise_b = torch.zeros_like(self.b_sigma)
 
         return F.linear(inputs, self.w_mu + noise_w, self.b_mu + noise_b)
+
 
 
 class PrioritizedReplayBuffer:
@@ -94,63 +96,73 @@ class PrioritizedReplayBuffer:
 
 
 class DQNCNN(nn.Module):
-    def __init__(self, input_shape, num_actions, noisy=False, n_step=1, memory_capacity=1000000, gamma=0.99):
+    def __init__(self, input_shape, num_actions, noisy=False, n_step=1, memory_capacity=1000000, gamma=0.99, lr=0.00025):
         super(DQNCNN, self).__init__()
 
-        # Store parameters
         self.noisy = noisy
         self.n_step = n_step
         self.gamma = gamma
         self.memory = PrioritizedReplayBuffer(capacity=memory_capacity)
         self.n_step_buffer = deque(maxlen=n_step)
 
-        # Define the main network
-        self.main_network = nn.Sequential(
+        # Convolutional part of the main network
+        self.main_conv = nn.Sequential(
             nn.Conv2d(input_shape[0], 32, kernel_size=8, stride=4),
             nn.ReLU(),
             nn.Conv2d(32, 64, kernel_size=4, stride=2),
             nn.ReLU(),
             nn.Conv2d(64, 64, kernel_size=3, stride=1),
             nn.ReLU(),
-            nn.Flatten(),  # Ensure output is flattened here
+            nn.Flatten()
+        )
+
+        # Fully connected part of the main network, using NoisyDense if noisy=True
+        self.main_fc = nn.Sequential(
             nn.Linear(64 * 7 * 7, 512),
             nn.ReLU(),
             NoisyDense(512, num_actions) if noisy else nn.Linear(512, num_actions)
         )
 
-        # Initialize the target network similarly to the main network
-        self.target_network = nn.Sequential(
+        # Initialize optimizer
+        self.optimizer = torch.optim.Adam(self.parameters(), lr=lr)
+
+        # Convolutional part of the target network
+        self.target_conv = nn.Sequential(
             nn.Conv2d(input_shape[0], 32, kernel_size=8, stride=4),
             nn.ReLU(),
             nn.Conv2d(32, 64, kernel_size=4, stride=2),
             nn.ReLU(),
             nn.Conv2d(64, 64, kernel_size=3, stride=1),
             nn.ReLU(),
-            nn.Flatten(),
+            nn.Flatten()
+        )
+
+        # Fully connected part of the target network, using NoisyDense if noisy=True
+        self.target_fc = nn.Sequential(
             nn.Linear(64 * 7 * 7, 512),
             nn.ReLU(),
             NoisyDense(512, num_actions) if noisy else nn.Linear(512, num_actions)
         )
 
-        # Optimizer
-        self.optimizer = optim.Adam(self.parameters(), lr=0.00025)
+    def forward(self, x, disable_noise=False):
+        # Pass through convolutional layers
+        x = self.main_conv(x)
 
-    def forward(self, x):
-        return self.main_network(x)
+        # Pass through fully connected layers, controlling noise in NoisyDense if needed
+        for layer in self.main_fc:
+            if isinstance(layer, NoisyDense):
+                x = layer(x, disable_noise=disable_noise)
+            else:
+                x = layer(x)
+        return x
 
-    def select_action(self, state):
-        # Convert state to a tensor
+    def select_action(self, state, disable_noise=False):
         state_tensor = torch.FloatTensor(state)
-
-        # Check if the state tensor needs a batch dimension
         if state_tensor.dim() == 3:
-            state_tensor = state_tensor.unsqueeze(0)  # Add batch dimension, shape becomes (1, 4, 84, 84)
+            state_tensor = state_tensor.unsqueeze(0)  # Add batch dimension if missing
 
         with torch.no_grad():
-            # Forward pass to get Q-values from the noisy network
-            q_values = self.forward(state_tensor)
-
-        # Return the action with the highest Q-value
+            q_values = self.forward(state_tensor, disable_noise=disable_noise)
         return torch.argmax(q_values).item()
 
     def remember(self, state, action, reward, next_state, done):
@@ -179,6 +191,7 @@ class DQNCNN(nn.Module):
         if len(self.memory) < batch_size:
             return None
 
+        # Sample a minibatch from the replay buffer
         minibatch, indices, weights = self.memory.sample(batch_size)
 
         # Extract components from minibatch
@@ -189,42 +202,44 @@ class DQNCNN(nn.Module):
         done_batch = torch.FloatTensor(np.array([s[4] for s in minibatch]))
         weights_batch = torch.FloatTensor(weights)
 
-        # Determine the number of channels (frames) in the state batch
-        num_channels = state_batch.shape[1]
+        # Reshape states and next states assuming they have been stacked correctly
+        state_batch = state_batch.view(batch_size, state_batch.shape[1], 84, 84)
+        next_state_batch = next_state_batch.view(batch_size, next_state_batch.shape[1], 84, 84)
 
-        # Reshape states assuming they have been stacked correctly
-        state_batch = state_batch.view(batch_size, num_channels, 84, 84)
-        next_state_batch = next_state_batch.view(batch_size, num_channels, 84, 84)
-
-        # Calculate the current Q-values
+        # Calculate current Q-values
         q_values = self.forward(state_batch)
-        next_q_values = self.target_network(next_state_batch)
-
-        # Select the Q-values corresponding to the actions taken
         q_value = q_values.gather(1, action_batch.unsqueeze(1)).squeeze(1)
 
-        # Compute the target Q-values
+        # Calculate target Q-values using target network
+        with torch.no_grad():
+            next_state_conv_output = self.target_conv(next_state_batch)
+            next_q_values = self.target_fc(next_state_conv_output)
+
         max_next_q_values = next_q_values.max(1)[0]
         target_q_value = reward_batch + (self.gamma * (1 - done_batch) * max_next_q_values)
 
-        # Calculate the loss
-        loss = (weights_batch * nn.functional.mse_loss(q_value, target_q_value.detach(), reduction='none')).mean()
+        # Compute the loss with importance sampling weights
+        loss = (weights_batch * F.mse_loss(q_value, target_q_value, reduction='none')).mean()
 
-        # Perform the optimization step
+        # Perform optimization step
         self.optimizer.zero_grad()
         loss.backward()
         torch.nn.utils.clip_grad_norm_(self.parameters(), max_norm=10)
         self.optimizer.step()
 
         # Update priorities in the replay buffer
-        priorities = (q_value - target_q_value.detach()).abs().detach().cpu().numpy() + 1e-6
+        priorities = (q_value - target_q_value).abs().detach().cpu().numpy() + 1e-6
         self.memory.update_priorities(indices, priorities)
 
         return loss
 
     def update_target_network(self, tau=0.005):
-        # Soft update of target network parameters using the polyak averaging formula
-        for target_param, param in zip(self.target_network.parameters(), self.main_network.parameters()):
+        # Update the convolutional layers of the target network
+        for target_param, param in zip(self.target_conv.parameters(), self.main_conv.parameters()):
+            target_param.data.copy_(tau * param.data + (1.0 - tau) * target_param.data)
+
+        # Update the fully connected layers of the target network
+        for target_param, param in zip(self.target_fc.parameters(), self.main_fc.parameters()):
             target_param.data.copy_(tau * param.data + (1.0 - tau) * target_param.data)
 
 

@@ -6,6 +6,7 @@ import torch
 import os
 import matplotlib.pyplot as plt
 import random
+import numpy as np
 
 # Load the YAML configuration file
 with open('config.yaml', 'r') as file:
@@ -40,7 +41,7 @@ dqn_target.load_state_dict(dqn.state_dict())
 dqn_target.eval()
 
 # Load a saved model if it exists
-model_save_path = 'Models/ddqn_model.pth'
+model_save_path = 'Models/nndqn_model.pth'
 if os.path.exists(model_save_path):
     dqn.load_state_dict(torch.load(model_save_path, weights_only= True))
     print(f"Loaded saved model from {model_save_path}")
@@ -116,6 +117,13 @@ for episode in range(num_episodes):
 
         # Get the current number of lives
         current_lives = info.get('lives', prev_lives)
+
+        # Penalize the agent for losing a life
+        if current_lives < prev_lives:
+            reward -= 1  # Subtract an additional point for dying
+
+        # Clip the reward to be within the range [-1, 1]
+        reward = np.clip(reward, -1, 1)
 
         # Update previous lives to the current lives
         prev_lives = current_lives

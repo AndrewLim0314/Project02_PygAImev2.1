@@ -3,12 +3,12 @@ dqn:
   gamma: 0.99  # Consider raising gamma for better long-term reward consideration
   learning_rate: 0.00025  # Match with training section
   epsilon_start: 1.0
-  epsilon_end: 0.01  # Keep this consistent
-  epsilon_decay: 0.995  # Match with training section
+  epsilon_end: 0.1  # Keep this consistent
+  epsilon_decay: 0.95  # Match with training section
   target_update: 5000  # Should match training target update frequency
   batch_size: 32  # Increased batch size
   memory_capacity: 1000000  # Match with training memory size
-  num_episodes: 1000
+  num_episodes: 250
   max_steps_per_episode: 5000  # Adjust as needed
   model_update: 250
 
